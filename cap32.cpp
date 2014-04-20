@@ -171,7 +171,7 @@
 #include "video.h"
 #include "z80.h"
 
-#define VERSION_STRING "v4.2.0"
+#define VERSION_STRING "v4.2.1"
 
 #define ERR_INPUT_INIT           1
 #define ERR_VIDEO_INIT           2
@@ -3951,8 +3951,11 @@ void loadConfiguration (void)
    char chFileName[_MAX_PATH + 1];
    char chPath[_MAX_PATH + 1];
 
-   strncpy(chFileName, chAppPath, sizeof(chFileName)-10);
-   strcat(chFileName, "/cap32.cfg");
+   struct passwd *pw = getpwuid(getuid());
+   const char *homedir = pw->pw_dir;
+
+   strcpy(chFileName, homedir);
+   strcat(chFileName, "/.cap32.cfg");
 
    memset(&CPC, 0, sizeof(CPC));
    CPC.model = getConfigValueInt(chFileName, "system", "model", 2); // CPC 6128
