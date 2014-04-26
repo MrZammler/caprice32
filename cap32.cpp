@@ -170,6 +170,7 @@
 #include "tape.h"
 #include "video.h"
 #include "z80.h"
+#include "insertdisk.h"
 
 #define VERSION_STRING "v4.2.1"
 
@@ -4595,48 +4596,58 @@ int main (int argc, char **argv)
                   } else { // process emulator specific keys
                      switch (cpc_key) {
 
-                        case CAP32_FULLSCRN:
-                           audio_pause();
-                           SDL_Delay(20);
-                           video_shutdown();
-                           CPC.scr_window = CPC.scr_window ? 0 : 1;
-                           if (video_init()) {
-                              fprintf(stderr, "video_init() failed. Aborting.\n");
-                              exit(-1);
-                           }
-                           audio_resume();
-                           break;
+		     case CAP32_FULLSCRN:
+		       audio_pause();
+		       SDL_Delay(20);
+		       video_shutdown();
+		       CPC.scr_window = CPC.scr_window ? 0 : 1;
+		       if (video_init()) {
+			 fprintf(stderr, "video_init() failed. Aborting.\n");
+			 exit(-1);
+		       }
+		       audio_resume();
+		       break;
 
-                        case CAP32_TAPEPLAY:
-                           if (pbTapeImage) {
-                              if (CPC.tape_play_button) {
-                                 CPC.tape_play_button = 0;
-                              } else {
-                                 CPC.tape_play_button = 0x10;
-                              }
-                           }
-                           break;
-
-                        case CAP32_RESET:
-                           emulator_reset(false);
-                           break;
-
-                        case CAP32_JOY:
-                           CPC.joysticks = CPC.joysticks ? 0 : 1;
-                           input_swap_joy();
-                           break;
-
-                        case CAP32_EXIT:
-                           exit (0);
-                           break;
-
-                        case CAP32_FPS:
-                           CPC.scr_fps = CPC.scr_fps ? 0 : 1; // toggle fps display on or off
-                           break;
-
-                        case CAP32_SPEED:
-                           CPC.limit_speed = CPC.limit_speed ? 0 : 1;
-                           break;
+		     case CAP32_TAPEPLAY:
+		       if (pbTapeImage) {
+			 if (CPC.tape_play_button) {
+			   CPC.tape_play_button = 0;
+			 } else {
+			   CPC.tape_play_button = 0x10;
+			 }
+		       }
+		       break;
+			   
+		     case CAP32_RESET:
+		       emulator_reset(false);
+		       break;
+		       
+		     case CAP32_JOY:
+		       CPC.joysticks = CPC.joysticks ? 0 : 1;
+		       input_swap_joy();
+		       break;
+		       
+		     case CAP32_EXIT:
+		       exit (0);
+		       break;
+		       
+		     case CAP32_FPS:
+		       CPC.scr_fps = CPC.scr_fps ? 0 : 1; // toggle fps display on or off
+		       break;
+		       
+		     case CAP32_SPEED:
+		       CPC.limit_speed = CPC.limit_speed ? 0 : 1;
+		       break;
+		       
+		     case CAP32_LOADDRVA:
+		       printf("F6 pressed\n");
+		       insertdisk();
+		       break;
+		       
+		     case CAP32_LOADDRVB:
+		       printf("F7 pressed\n");
+		       insertdisk();
+		       break;
 
                         #ifdef DEBUG
                         case DEBUG_KEY:

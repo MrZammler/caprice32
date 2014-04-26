@@ -344,6 +344,7 @@ SDL_Surface* double_init(int w,int h, int bpp, bool fs)
 		w=CPC_VISIBLE_SCR_WIDTH*2;
 		h=CPC_VISIBLE_SCR_HEIGHT*2;
 	}
+	printf("[%d] [%d]\n", w, h);
 	vid=SDL_SetVideoMode(w,h,bpp,SDL_ANYFORMAT | SDL_HWSURFACE | SDL_HWPALETTE | (fs?SDL_FULLSCREEN:0));
 	if (!vid)
 		return NULL;
