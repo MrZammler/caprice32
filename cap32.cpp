@@ -1082,7 +1082,7 @@ static int kbd_layout[4][KBD_MAX_ENTRIES][2] = {
       { CPC_SPACE,      SDLK_SPACE },
       { CPC_TAB,        SDLK_TAB },
       { CPC_UNDERSCORE, SDLK_MINUS | MOD_PC_SHIFT },
-      { CAP32_EXIT,     SDLK_F10 },
+      { CAP32_EXIT,     SDLK_F9 },
       { CAP32_FPS,      SDLK_F12 | MOD_PC_CTRL },
       { CAP32_FULLSCRN, SDLK_F1 },
       { CAP32_JOY,      SDLK_F8 | MOD_PC_CTRL },
@@ -4238,6 +4238,7 @@ int main (int argc, char **argv)
    int iExitCondition;
    bool bolDone;
    SDL_Event event;
+   int was_fs = 0;
 
    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_NOPARACHUTE) < 0) { // initialize SDL
       fprintf(stderr, "SDL_Init() failed: %s\n", SDL_GetError());
@@ -4639,14 +4640,53 @@ int main (int argc, char **argv)
 		       CPC.limit_speed = CPC.limit_speed ? 0 : 1;
 		       break;
 		       
-		     case CAP32_LOADDRVA:
-		       printf("F6 pressed\n");
-		       insertdisk();
+		     case CAP32_LOADDRVA: 
+		       /* leave fs to show selector */
+		       /* there might be a way to display the selector in front, not sure */
+		       
+		       if (CPC.scr_window == 0)
+			 {
+			   was_fs = 1;
+			   audio_pause();
+			   SDL_Delay(20);
+			   video_shutdown();
+			   CPC.scr_window =  1;
+			   if (video_init()) {
+			     fprintf(stderr, "video_init() failed. Aborting.\n");
+			     exit(-1);
+			   }
+			   audio_resume();
+			 }
+
+		       //printf("F6 pressed: [%s]\n", CPC.drvA_path);
+		       char chFileName[_MAX_PATH + 1];
+		       insertdisk(CPC.drvA_path, chFileName);
+		       if(!dsk_load(chFileName, &driveA, 'A')) {
+			 //strcpy(CPC.drvA_path, path);
+			 //strcpy(CPC.drvA_file, file_name);
+			 CPC.drvA_zip = 0;
+			 have_DSK = true;
+		       }
+		       //printf("[%s]\n", chFileName);
+
+		       if (was_fs == 1)
+			 {
+			  audio_pause();
+			   SDL_Delay(20);
+			   video_shutdown();
+			   CPC.scr_window =  0;
+			   if (video_init()) {
+			     fprintf(stderr, "video_init() failed. Aborting.\n");
+			     exit(-1);
+			   }
+			   audio_resume();
+			   was_fs=0;
+			 } 
 		       break;
 		       
 		     case CAP32_LOADDRVB:
-		       printf("F7 pressed\n");
-		       insertdisk();
+		       //printf("F7 pressed\n");
+		       //insertdisk(CPC.drvB_path);
 		       break;
 
                         #ifdef DEBUG
