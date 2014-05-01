@@ -1,4 +1,5 @@
 Caprice32 - Amstrad CPC Emulator
+
 (c) Copyright 1997-2004 Ulrich Doewich
 
 Caprice32 is a software emulator of the Amstrad CPC 8bit home computer
@@ -18,3 +19,7 @@ Please see docs/INSTALL.txt for compiling and installing and
 docs/USAGE.txt for configuring and running the emulator. (Note: WIP)
 
 The original README.txt is provided in docs/README_ORIGINAL.txt
+
+Note: I'm not sure what the status of roms (i.e. amsdos.rom, etc.) is.
+They were provided with the original source, so I'm including them here.
+If anyone knows if they are still under copyright, please let me know. 
