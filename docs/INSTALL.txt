@@ -1,0 +1,37 @@
+Caprice32 - Amstrad CPC Emulator - INSTALL.txt
+----------------------------------------------
+
+REQUIREMENTS
+------------
+
+You will need the following to successfully compile an executable:
+
+SDL - http://www.libsdl.org/index.php
+zLib - http://www.gzip.org/zlib/
+GTK+ 2.x - http://www.gtk.org/
+
+COMPILING
+---------
+
+Linux target:
+
+use:
+
+$ make
+
+to compile a developer build, or use:
+
+$ make RELEASE=TRUE
+
+for an optimized executable.
+
+INSTALL
+-------
+
+Copy the cap32 executable anywhere in your path.
+
+Copy cap32.cfg to ~/.cap32.cfg
+
+Copy the rom directory anywhere you want. Edit ~/.cap32.cfg 
+and set the above path to the rom_path section of the config
+file.
