@@ -14,7 +14,7 @@ CFLAGS	= $(GFLAGS) -O2 -funroll-loops -ffast-math -fomit-frame-pointer -fno-stre
 LIBS = `sdl-config --libs` `pkg-config --libs gtk+-2.0` -lz
 
 cap32: cap32.cpp crtc.o fdc.o glfuncs.o psg.o tape.o video.o insertdisk.o z80.o cap32.h z80.h
-	$(CC) $(CFLAGS) $(IPATHS) -o cap32 cap32.cpp crtc.o fdc.o glfuncs.o psg.o tape.o video.o z80.o insertdisk.o $(LIBS) && mv ./cap32 ..
+	$(CC) $(CFLAGS) $(IPATHS) -o cap32 cap32.cpp crtc.o fdc.o glfuncs.o psg.o tape.o video.o z80.o insertdisk.o $(LIBS) && mv cap32 ../
 
 crtc.o: crtc.c cap32.h crtc.h z80.h
 	$(CC) $(CFLAGS) -c crtc.c

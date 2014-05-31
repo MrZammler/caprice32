@@ -1,0 +1,34 @@
+Caprice32 - Amstrad CPC Emulator - USAGE.txt
+--------------------------------------------
+
+Keys
+----
+
+F1         = Toggle window/full screen modes.
+F2         = Load snapshot (not working).
+F3         = Load tape image. (not working atm).
+Ctrl + F3  = Play tape.
+F4         = Save snapshot (not working).
+F5         = Reset emulator.
+Ctrl + F5  = Reset MF2.
+F6         = Insert a .dsk file in Drive A.
+F6         = Insert a .dsk file in Drive B. (not working atm).
+F8         = Options (not working).
+Ctrl + F8  = Enable/disable joystick.
+F9         = Quit emulator.
+F12        = Toggle speed.
+Ctrl + F12 = Show/hide FPS.
+Break      = Pause emulator. (not working).
+PrtSc      = Save screenshot.
+
+Configuration file (~/.cap32.cfg)
+---------------------------------
+
+* model
+ 
+	Choose CPC model to emulate.
+ 	Values: 0 for 464
+		1 for 664
+		2 for 6128
+
+ 
