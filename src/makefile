@@ -5,11 +5,11 @@ CC	= g++
 
 GFLAGS	= -Wall `sdl-config --cflags`
 
-ifdef RELEASE
+#ifdef RELEASE
 CFLAGS	= $(GFLAGS) -O2 -funroll-loops -ffast-math -fomit-frame-pointer -fno-strength-reduce -finline-functions -s
-else
-CFLAGS	= $(GFLAGS) -gstabs+
-endif
+#else
+#CFLAGS	= $(GFLAGS) -gstabs+
+#endif
 
 LIBS = `sdl-config --libs` `pkg-config --libs gtk+-2.0` -lz
 
