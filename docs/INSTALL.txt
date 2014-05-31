@@ -19,19 +19,17 @@ use:
 
 $ make
 
-to compile a developer build, or use:
+inside the src directory.
 
-$ make RELEASE=TRUE
-
-for an optimized executable.
+This will create the cap32 executable in ../
 
 INSTALL
 -------
 
-Copy the cap32 executable anywhere in your path.
+Copy the cap32 executable anywhere in your path. Copy the rom dir
+and its contents in the same directory.
 
-Copy cap32.cfg to ~/.cap32.cfg
+On the first run, it will create a ~/.cap32.cfg file. You can change
+the rom path there, and place the roms anywhere you want. (Check the
+rom_path section).
 
-Copy the rom directory anywhere you want. Edit ~/.cap32.cfg 
-and set the above path to the rom_path section of the config
-file.

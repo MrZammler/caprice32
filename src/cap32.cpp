@@ -3945,7 +3945,97 @@ void getConfigValueString (char* pchFileName, char* pchSection, char* pchKey, ch
    strncpy(pchValue, pchDefaultValue, iSize); // no value found, return the default
 }
 
+void createConfiguration (char *chName)
+{
+  FILE *fp;
 
+  fp = fopen (chName, "w");
+  
+  if (!fp)
+    {
+      printf("Failed to create a default config file [%s]\n", chName);
+      exit(0);
+    }
+  
+  fprintf(fp, "[system]\n");
+  fprintf(fp, "model=2\n");
+  fprintf(fp, "jumpers=30\n");
+  fprintf(fp, "ram_size=128\n");
+  fprintf(fp, "speed=4\n");
+  fprintf(fp, "auto_pause=1\n");
+  fprintf(fp, "printer=0\n");
+  fprintf(fp, "mf2=0\n");
+  fprintf(fp, "keyboard=0\n");
+  fprintf(fp, "joysticks=0\n");
+  fprintf(fp, "[video]\n");
+  fprintf(fp, "scr_width=800\n");
+  fprintf(fp, "scr_height=600\n");
+  fprintf(fp, "scr_bpp=8\n");
+  fprintf(fp, "scr_style=0\n");
+  fprintf(fp, "scr_oglfilter=1\n");
+  fprintf(fp, "scr_vsync=0\n");
+  fprintf(fp, "scr_led=1\n");
+  fprintf(fp, "scr_fps=1\n");
+  fprintf(fp, "scr_tube=0\n");
+  fprintf(fp, "scr_intensity=10\n");
+  fprintf(fp, "scr_remanency=0\n");
+  fprintf(fp, "scr_window=1\n");
+  fprintf(fp, "[sound]\n");
+  fprintf(fp, "enabled=1\n");
+  fprintf(fp, "playback_rate=2\n");
+  fprintf(fp, "bits=1\n");
+  fprintf(fp, "stereo=1\n");
+  fprintf(fp, "volume=80\n");
+  fprintf(fp, "pp_device=0\n");
+  fprintf(fp, "[control]\n");
+  fprintf(fp, "kbd_layout=0\n");
+  fprintf(fp, "[file]\n");
+  fprintf(fp, "max_track_size=5990\n");
+  fprintf(fp, "snap_path=./snap/\n");
+  fprintf(fp, "snap_file=\n");
+  fprintf(fp, "snap_zip=0\n");
+  fprintf(fp, "drvA_path=./disk/\n");
+  fprintf(fp, "drvA_file=\n");
+  fprintf(fp, "drvA_zip=0\n");
+  fprintf(fp, "drvA_format=0\n");
+  fprintf(fp, "drvB_path=./disk/\n");
+  fprintf(fp, "drvB_file=\n");
+  fprintf(fp, "drvB_zip=0\n");
+  fprintf(fp, "drvB_format=0\n");
+  fprintf(fp, "tape_path=./tape/\n");
+  fprintf(fp, "tape_file=\n");
+  fprintf(fp, "tape_zip=0\n");
+  fprintf(fp, "fmt02=\n");
+  fprintf(fp, "fmt03=\n");
+  fprintf(fp, "fmt04=\n");
+  fprintf(fp, "fmt05=\n");
+  fprintf(fp, "fmt06=\n");
+  fprintf(fp, "fmt07=\n");
+  fprintf(fp, "printer_file=./printer.dat\n");
+  fprintf(fp, "sdump_file=./screen.png\n");
+  fprintf(fp, "[rom]\n");
+  fprintf(fp, "rom_path=./rom/\n");
+  fprintf(fp, "slot00=\n");
+  fprintf(fp, "slot01=\n");
+  fprintf(fp, "slot02=\n");
+  fprintf(fp, "slot03=\n");
+  fprintf(fp, "slot04=\n");
+  fprintf(fp, "slot05=\n");
+  fprintf(fp, "slot06=\n");
+  fprintf(fp, "slot07=amsdos.rom\n");
+  fprintf(fp, "slot08=\n");
+  fprintf(fp, "slot09=\n");
+  fprintf(fp, "slot10=\n");
+  fprintf(fp, "slot11=\n");
+  fprintf(fp, "slot12=\n");
+  fprintf(fp, "slot13=\n");
+  fprintf(fp, "slot14=\n");
+  fprintf(fp, "slot15=\n");
+  fprintf(fp, "rom_mf2=\n");
+  
+  fclose(fp);
+
+}
 
 void loadConfiguration (void)
 {
@@ -3954,9 +4044,16 @@ void loadConfiguration (void)
 
    struct passwd *pw = getpwuid(getuid());
    const char *homedir = pw->pw_dir;
+   struct stat sb;
 
    strcpy(chFileName, homedir);
    strcat(chFileName, "/.cap32.cfg");
+
+   if (stat(chFileName, &sb) == -1)
+     {
+       //create a default config file
+       createConfiguration(chFileName);
+     }
 
    memset(&CPC, 0, sizeof(CPC));
    CPC.model = getConfigValueInt(chFileName, "system", "model", 2); // CPC 6128
